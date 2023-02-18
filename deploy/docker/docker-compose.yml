@@ -15,20 +15,25 @@ services:
       - pg-db-network
     restart: always
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
+  testaws:
+    container_name: testaws
+    image: cristhiannrodrigues/testaws:0.0.2-SNAPSHOT
     environment:
-      PGADMIN_DEFAULT_EMAIL: "cristhiannrodrigues@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "admin"
+      SERVER_PORT: 3000
       TZ: "America/Sao_Paulo"
     ports:
-      - "16543:80"
+      - "80:3000"
     depends_on:
       - postgres-db
     networks:
       - pg-db-network
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 700M
 
 networks:
   pg-db-network:
